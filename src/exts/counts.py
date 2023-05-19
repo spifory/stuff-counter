@@ -1,3 +1,5 @@
+import re
+
 from disnake import Message, MessageCommandInteraction
 from disnake.ext.plugins import Plugin
 from emoji import emoji_count
@@ -8,7 +10,7 @@ plugin = Plugin[Bot](message_command_attrs={"dm_permission": False})
 
 @plugin.message_command(name="Word Count")
 async def message_word_count(inter: MessageCommandInteraction, message: Message):
-    word_count = len(message.content.split(" "))
+    word_count = len(re.findall(r"\S+", message.content))
     noun = "word" if word_count == 1 else "words"
 
     return await inter.response.send_message(
