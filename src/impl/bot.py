@@ -1,4 +1,5 @@
 from logging import getLogger
+from os import environ
 
 from disnake import Activity, ActivityType, Intents
 from disnake.ext.commands import InteractionBot
@@ -12,7 +13,7 @@ class Bot(InteractionBot):
         super().__init__(
             intents=Intents(guilds=True, guild_messages=True, message_content=True),
             activity=Activity(name="counting game", type=ActivityType.playing),
-            test_guilds=(906815360492253205,)
+            test_guilds=environ.get("TEST_GUILDS", "").split(",").__init__()
         )
 
     async def on_ready(self):
