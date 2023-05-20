@@ -23,6 +23,7 @@ ruff = "^0.0.267"
 start = "python -m src"
 
 [tool.ruff]
+max-line-length = 120
 select = ["F", "E", "I", "ANN", "Q", "TID", "ARG", "COM"]
 ignore = ["ANN101", "ANN102", "ANN201", "ANN202", "ANN204"]
 
