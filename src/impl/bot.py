@@ -13,7 +13,8 @@ class Bot(InteractionBot):
         super().__init__(
             intents=Intents(guilds=True, guild_messages=True, message_content=True),
             activity=Activity(name="counting game", type=ActivityType.playing),
-            test_guilds=environ.get("TEST_GUILDS", "").split(",").__init__()
+            # support multiple test guilds
+            test_guilds=[int(guild) for guild in environ["TEST_GUILDS"].strip("[]").split(", ")],
         )
 
     async def on_ready(self):
