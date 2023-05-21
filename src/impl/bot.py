@@ -11,7 +11,7 @@ __all__ = ("Bot",)
 class Bot(InteractionBot):
     def __init__(self):
         super().__init__(
-            intents=Intents(guilds=True, guild_messages=True, message_content=True),
+            intents=Intents(guilds=True, messages=True, message_content=True),
             activity=Activity(name="counting game", type=ActivityType.playing),
             # support multiple test guilds
             test_guilds=[int(guild) for guild in environ["TEST_GUILDS"].strip("[]").split(", ")],
