@@ -102,6 +102,23 @@ class PinCount:
             f"{channel.mention} has {pin_count} pinned message{'' if pin_count == 1 else 's'}"
         )
 
+@plugin.slash_command(name="pin-count")
+async def pin_message_count(
+    inter: GuildCommandInteraction,
+    channel: Thread | TextChannel | None = None
+):
+    """See how many pins are in the current channel, or given channel.
+
+    Parameters
+    ----------
+    channel: The channel to count the pins of. Defaults to the current channel.
+    """
+    pin_count = len(await (channel or inter.channel).pins())
+
+    return await inter.response.send_message(
+        f"There {'are' if pin_count != 1 else 'is'} {pin_count} { 'pin' if pin_count == 1 else 'pins'} in this channel",
+    )
+
 
 @plugin.load_hook
 def setup():
