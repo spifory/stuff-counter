@@ -1,4 +1,4 @@
-from disnake import User, UserCommandInteraction
+from disnake import AllowedMentions, User, UserCommandInteraction
 from disnake.ext.plugins import Plugin
 
 from src.impl.bot import Bot
@@ -12,6 +12,7 @@ async def user_username_count(inter: UserCommandInteraction, user: User):
 
     return await inter.response.send_message(
         f"{user.mention} has {username_count} {noun} in their username",
+        allowed_mentions=AllowedMentions.none()
     )
 
 setup, teardown = plugin.create_extension_handlers()
