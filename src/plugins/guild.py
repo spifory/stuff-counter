@@ -1,12 +1,15 @@
 import re
 
-from disnake import AllowedMentions, GuildCommandInteraction, Role
+from disnake import AllowedMentions, GuildCommandInteraction, Role, TextChannel, Thread
 from disnake.abc import GuildChannel
 from disnake.ext.plugins import Plugin
 
 from src.impl.bot import Bot
 
-plugin = Plugin[Bot](slash_command_attrs={"dm_permission": False}) # no sense in allowing this in DMs
+plugin = Plugin[Bot](
+    name=__name__, # no sense in allowing this in DMs
+    slash_command_attrs={"dm_permission": False}
+)
 
 @plugin.slash_command(name="letter-count")
 async def letter_count(_: GuildCommandInteraction):

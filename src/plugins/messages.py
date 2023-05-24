@@ -6,7 +6,7 @@ from emoji import emoji_count
 
 from src.impl.bot import Bot
 
-plugin = Plugin[Bot]()
+plugin = Plugin[Bot](name=__name__)
 
 @plugin.message_command(name="Word Count")
 async def message_word_count(inter: MessageCommandInteraction, message: Message):
