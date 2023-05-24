@@ -57,7 +57,7 @@ async def count_channel_name(inter: GuildCommandInteraction, channel: GuildChann
     )
 
 @plugin.slash_command(name="pin-count")
-async def pin_message_count(
+async def count_channel_pins(
     inter: GuildCommandInteraction,
     channel: Thread | TextChannel | None = None
 ):
