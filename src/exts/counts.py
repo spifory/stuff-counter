@@ -35,4 +35,13 @@ async def message_character_count(inter: MessageCommandInteraction, message: Mes
         f"[This]({message.jump_url}) message has {character_count} {noun} in it",
     )
 
+@plugin.message_command(name="Punctuation Count")
+async def message_punctuation_count(inter: MessageCommandInteraction, message: Message):
+    punctuation_count = len(re.findall(r"[^\w\s]", message.content))
+    noun = "punctuation mark" if punctuation_count == 1 else "punctuation marks"
+
+    return await inter.response.send_message(
+        f"[This]({message.jump_url}) message has {punctuation_count} {noun} in it",
+    )
+
 setup, teardown = plugin.create_extension_handlers()
