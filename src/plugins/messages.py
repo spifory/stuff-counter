@@ -28,7 +28,7 @@ async def message_emoji_count(inter: MessageCommandInteraction, message: Message
 
 @plugin.message_command(name="Letter Count")
 async def message_character_count(inter: MessageCommandInteraction, message: Message):
-    character_count = len(message.content.strip())
+    character_count = len(re.sub(r"\s+", "", message.content))
     noun = "letter" if character_count == 1 else "letters"
 
     return await inter.response.send_message(

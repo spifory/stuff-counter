@@ -1,3 +1,5 @@
+import re
+
 from disnake import AllowedMentions, User, UserCommandInteraction
 from disnake.ext.plugins import Plugin
 
@@ -7,7 +9,7 @@ plugin = Plugin[Bot]()
 
 @plugin.user_command(name="Username Letter Count")
 async def user_username_count(inter: UserCommandInteraction, user: User):
-    username_count = len(user.name)
+    username_count = len(re.sub(r"\s+", "", user.name))
     noun = "letter" if username_count == 1 else "letters"
 
     return await inter.response.send_message(
