@@ -20,16 +20,16 @@ async def main():
     bot = Bot()
     log = getLogger(__name__)
 
-    for extension in Path("src/exts").glob("**/*.py"):
-        if extension.name.startswith("_"):
+    for plugin in Path("src/plugins").glob("**/*.py"):
+        if plugin.name.startswith("_"):
             continue
 
-        ext = ".".join(extension.parts)[:-3]
+        ext = ".".join(plugin.parts)[:-3]
 
         try:
             bot.load_extension(ext)
         except ExtensionError as e:
-            log.error("error loading extension (%s): %s", e.name, e)
+            log.error("error loading plugin (%s): %s", e.name, e)
             log.warning("exiting...")
             exit(1)
 
