@@ -7,8 +7,7 @@ from disnake.ext.plugins import Plugin
 from src.impl.bot import Bot
 
 plugin = Plugin[Bot](
-    name=__name__, # no sense in allowing this in DMs
-    slash_command_attrs={"dm_permission": False}
+    slash_command_attrs={"dm_permission": False} # no sense in allowing this in DMs
 )
 
 @plugin.slash_command(name="letter-count")

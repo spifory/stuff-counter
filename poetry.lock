@@ -354,17 +354,17 @@ typing-extensions = "^4.3.0"
 type = "git"
 url = "https://github.com/Chromosomologist/disnake-ext-plugins"
 reference = "HEAD"
-resolved_reference = "707b28c924fe79ea110b07cddb0b0b5b0c9ac635"
+resolved_reference = "69dcfc7bbd0748cdaa7e4ac9ff5a3abecdf53a55"
 
 [[package]]
 name = "emoji"
-version = "2.2.0"
+version = "2.4.0"
 description = "Emoji for Python"
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 files = [
-    {file = "emoji-2.2.0.tar.gz", hash = "sha256:a2986c21e4aba6b9870df40ef487a17be863cb7778dcf1c01e25917b7cd210bb"},
+    {file = "emoji-2.4.0.tar.gz", hash = "sha256:72b918412f7059f57b0f0b0c27f3458802c4c97a2f039f4732610c2582b6c9e4"},
 ]
 
 [package.extras]
@@ -715,14 +715,14 @@ files = [
 
 [[package]]
 name = "typing-extensions"
-version = "4.5.0"
+version = "4.6.1"
 description = "Backported and Experimental Type Hints for Python 3.7+"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "typing_extensions-4.5.0-py3-none-any.whl", hash = "sha256:fb33085c39dd998ac16d1431ebc293a8b3eedd00fd4a32de0ff79002c19511b4"},
-    {file = "typing_extensions-4.5.0.tar.gz", hash = "sha256:5cb5f4a79139d699607b3ef622a1dedafa84e115ab0024e0d9c044a9479ca7cb"},
+    {file = "typing_extensions-4.6.1-py3-none-any.whl", hash = "sha256:6bac751f4789b135c43228e72de18637e9a6c29d12777023a703fd1a6858469f"},
+    {file = "typing_extensions-4.6.1.tar.gz", hash = "sha256:558bc0c4145f01e6405f4a5fdbd82050bd221b119f4bf72a961a1cfd471349d6"},
 ]
 
 [[package]]
@@ -816,4 +816,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "8bc852ca3dbc7b339456d38523d2b739fdc29da410c267f4308a3737e39c41ec"
+content-hash = "62e549a00deed22dd3e64acec9d8096ac698f8cc7015c6c49da475070fba49c4"

@@ -5,7 +5,7 @@ from disnake.ext.plugins import Plugin
 
 from src.impl.bot import Bot
 
-plugin = Plugin[Bot](name=__name__)
+plugin = Plugin[Bot]()
 
 @plugin.user_command(name="Username Letter Count")
 async def user_username_count(inter: UserCommandInteraction, user: User):

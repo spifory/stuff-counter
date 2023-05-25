@@ -13,7 +13,7 @@ disnake = "^2.8.1"
 disnake-ext-plugins = {git = "https://github.com/Chromosomologist/disnake-ext-plugins"}
 python-dotenv = "^1.0.0"
 taskipy = "^1.11.0"
-emoji = "^2.2.0"
+emoji = "^2.4.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
