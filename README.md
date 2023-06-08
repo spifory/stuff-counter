@@ -2,7 +2,6 @@
 
 A Discord bot that counts everything for you, when you don't feel like it!
 
-
 ## Hosting Locally
 
 Setting up the bot is really easy, you firstly need to fill in the .env file with a bot token. You _can_ also add a list of guilds to test commands on, but it's not required.
@@ -11,10 +10,10 @@ Setting up the bot is really easy, you firstly need to fill in the .env file wit
 BOT_TOKEN=...
 
 # optional
-TEST_GUILDS=[...] # used for posting commands to certain guilds. Usually for testing
+TEST_GUILD=... # used for posting commands to a guild. Usually for testing
 ```
 
-Then you can run `docker-compose up` to start the bot.
+Then you can run `docker-compose up` or `poetry run task start` to start the bot.
 
 ## Support
 
