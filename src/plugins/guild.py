@@ -1,5 +1,5 @@
 from logging import getLogger
-from hikari import GuildChannel, RESTBot, Role
+from hikari import GuildTextChannel, RESTBot, Role
 from crescent import Context, Group, Plugin, command, option
 
 
@@ -53,7 +53,7 @@ class LetterCountGuildName:
 class LetterCountChannelName:
     channel = option(
         description="The channel to count the letters of",
-        option_type=GuildChannel,
+        option_type=GuildTextChannel,
         default=None,
     )
 
@@ -85,7 +85,7 @@ class LetterCountChannelName:
 class PinCount:
     channel = option(
         description="The channel to count the pins of",
-        option_type=GuildChannel,
+        option_type=GuildTextChannel,
         default=None,
     )
 
