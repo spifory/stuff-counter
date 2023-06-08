@@ -13,7 +13,7 @@ BOT_TOKEN=...
 TEST_GUILD=... # used for posting commands to a guild. Usually for testing
 ```
 
-Then you can run `docker-compose up` or `poetry run task start` to start the bot.
+Then you can run `poetry run task start` to start the bot.
 
 ## Support
 
