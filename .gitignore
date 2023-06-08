@@ -4,12 +4,6 @@ DS_Store/
 .vim/
 .vscode/
 __pycache__/
-# misc
-
-DS_Store/
-.vim/
-.vscode/
-__pycache__/
 
 .env
 .editorconfig
