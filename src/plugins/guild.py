@@ -92,14 +92,14 @@ class PinCount:
     async def callback(self, ctx: Context):
         if self.channel is None:
             assert ctx.channel_id is not None
-            channel = await plugin.app.rest.fetch_channel(ctx.channel_id)
+            channel = ctx.channel_id
         else:
-            channel = await plugin.app.rest.fetch_channel(self.channel.id)
+            channel = self.channel.id
 
-        pin_count = len(await plugin.app.rest.fetch_pins(channel.id))
+        pin_count = len(await plugin.app.rest.fetch_pins(channel))
 
         return await ctx.respond(
-            f"{channel.mention} has {pin_count} pinned message{'' if pin_count == 1 else 's'}"
+            f"<#{channel}> has {pin_count} pinned message{'' if pin_count == 1 else 's'}"
         )
 
 
