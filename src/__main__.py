@@ -1,15 +1,12 @@
-from asyncio import run
-from logging import INFO, basicConfig, getLogger
+from logging import INFO, basicConfig
 from os import environ
-from pathlib import Path
 
-from disnake.ext.commands.errors import ExtensionError
+from crescent import Client
 from dotenv import load_dotenv
+from hikari import RESTBot
 
-from src import Bot
 
-
-async def main():
+def main():
     load_dotenv()
     basicConfig(
         format="[%(asctime)s] | %(name)s | %(levelname)s | %(message)s",
@@ -17,23 +14,16 @@ async def main():
         datefmt="%Y-%m-%d - %H:%M:%S",
     )
 
-    bot = Bot()
-    log = getLogger(__name__)
+    bot = RESTBot(environ["BOT_TOKEN"])
+    client = Client(
+        bot,
+        default_guild=environ.get("DEFAULT_GUILD", None),  # type: ignore
+    )
 
-    for plugin in Path("src/plugins").glob("**/*.py"):
-        if plugin.name.startswith("_"):
-            continue
+    client.plugins.load_folder("src.plugins")
 
-        ext = ".".join(plugin.parts)[:-3]
+    bot.run()
 
-        try:
-            bot.load_extension(ext)
-        except ExtensionError as e:
-            log.error("error loading plugin (%s): %s", e.name, e)
-            log.warning("exiting...")
-            exit(1)
-
-    await bot.start(environ["BOT_TOKEN"])
 
 if __name__ == "__main__":
-    run(main())
+    main()
