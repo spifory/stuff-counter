@@ -1,29 +1,31 @@
 [tool.poetry]
-name = "wordcounter-bot"
-version = "1.0.0"
-description = "A bot that counts how many characters and words are in a Discord message."
+name = "stuff-counter"
+version = "2.0.0"
+description = "A bot that counts stuff when you feel lazy to"
 authors = ["toolifelesstocode <luvuyosilubane50@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 packages = [{include = "src"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
-disnake = "^2.8.1"
-disnake-ext-plugins = {git = "https://github.com/Chromosomologist/disnake-ext-plugins"}
+python = ">=3.11,<3.12" # so that crescent does not error
+hikari = {extras = ["server"], version = "^2.0.0.dev119"}
+hikari-crescent = "^0.6.0"
 python-dotenv = "^1.0.0"
-taskipy = "^1.11.0"
 emoji = "^2.4.0"
+taskipy = "^1.11.0"
 
 [tool.poetry.group.dev.dependencies]
+ruff = "^0.0.270"
 black = "^23.3.0"
-ruff = "^0.0.267"
+vercel = "^0.2.1"
+
 
 [tool.taskipy.tasks]
 start = "python -m src"
 
 [tool.ruff]
-max-line-length = 120
+max-line-length = 100
 select = ["F", "E", "I", "ANN", "Q", "TID", "ARG", "COM"]
 ignore = ["ANN101", "ANN102", "ANN201", "ANN202", "ANN204"]
 
