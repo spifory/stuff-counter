@@ -1,20 +1,17 @@
-import re
+from crescent import Context, Plugin, user_command
+from hikari import RESTBot, User
 
-from disnake import AllowedMentions, User, UserCommandInteraction
-from disnake.ext.plugins import Plugin
 
-from src.impl.bot import Bot
+plugin = Plugin[RESTBot, None]()
 
-plugin = Plugin[Bot]()
+@plugin.include
+@user_command(name="Username Letter Count")
+async def user_letter_count(ctx: Context, user: User):
+    letter_count = sum(not i.isspace for i in user.username)
+    noun = "letter" if letter_count == 1 else "letters"
 
-@plugin.user_command(name="Username Letter Count")
-async def user_username_count(inter: UserCommandInteraction, user: User):
-    username_count = len(re.sub(r"\s+", "", user.name))
-    noun = "letter" if username_count == 1 else "letters"
-
-    return await inter.response.send_message(
-        f"{user.mention} has {username_count} {noun} in their username",
-        allowed_mentions=AllowedMentions.none()
+    await ctx.respond(
+        content=f"{user.mention} has {letter_count} {noun} in their name.",
+        user_mentions=False
     )
-
-setup, teardown = plugin.create_extension_handlers()
+    return

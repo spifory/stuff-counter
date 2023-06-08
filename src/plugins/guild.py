@@ -1,76 +1,113 @@
-import re
+from logging import getLogger
+from hikari import GuildTextChannel, RESTBot, Role
+from crescent import Context, Group, Plugin, command, option
 
-from disnake import AllowedMentions, GuildCommandInteraction, Role, TextChannel, Thread
-from disnake.abc import GuildChannel
-from disnake.ext.plugins import Plugin
 
-from src.impl.bot import Bot
+plugin = Plugin[RESTBot, None]()
+log = getLogger(__name__)
 
-plugin = Plugin[Bot](
-    slash_command_attrs={"dm_permission": False} # no sense in allowing this in DMs
+letter_count = Group("letter-count", dm_enabled=False)
+
+
+@plugin.include
+@letter_count.child
+@command(name="role", description="See how many letters are a role's name.")
+class LetterCountRoleCount:
+    role = option(description="The role to count the letters of", option_type=Role)
+
+    async def callback(self, ctx: Context):
+        role_name_count = sum(not c.isspace() for c in self.role.name)
+        noun = "letter" if role_name_count == 1 else "letters"
+
+        return await ctx.respond(
+            f"The role {self.role.mention} has {role_name_count} {noun} in its name",
+            role_mentions=False,
+            mentions_everyone=False,  # in case the role name is @everyone for some reason
+        )
+
+
+@plugin.include
+@letter_count.child
+@command(
+    name="server-name", description="See how many letters are in the server's name."
 )
+class LetterCountGuildName:
+    async def callback(self, ctx: Context):
+        assert ctx.guild_id is not None
+        guild = await plugin.app.rest.fetch_guild(ctx.guild_id)
+        server_name_count = sum(not c.isspace() for c in guild.name)
+        noun = "letter" if server_name_count == 1 else "letters"
 
-@plugin.slash_command(name="letter-count")
-async def letter_count(_: GuildCommandInteraction):
-    pass
+        return await ctx.respond(
+            f"This server has {server_name_count} {noun} in its name",
+            role_mentions=False,  # in case the server name is a bloody role mention for whatever reason
+            mentions_everyone=False,  # in case the server name is @everyone for some reason
+        )
 
-@letter_count.sub_command(name="role")
-async def count_role(inter: GuildCommandInteraction, role: Role):
-    """See how many letters are a role name.
 
-    Parameters
-    ----------
-    role: The role to count the letters of.
-    """
-    role_name_count = len(re.sub(r"\s+", "", role.name))
-    noun = "letter" if role_name_count == 1 else "letters"
-
-    return await inter.response.send_message(
-        f"The role {role.mention} has {role_name_count} {noun} in its name",
-        allowed_mentions=AllowedMentions.none()
+@plugin.include
+@letter_count.child
+@command(
+    name="channel-name", description="See how many letters are in the channel's name."
+)
+class LetterCountChannelName:
+    channel = option(
+        description="The channel to count the letters of",
+        option_type=GuildTextChannel,
+        default=None,
     )
 
-@letter_count.sub_command(name="server-name")
-async def count_guild_name(inter: GuildCommandInteraction):
-    """See how many letters are in the server name."""
-    guild_name_count = len(re.sub(r"\s+", "", inter.guild.name))
-    noun = "letter" if guild_name_count == 1 else "letters"
+    async def callback(self, ctx: Context):
+        if self.channel is None:
+            assert ctx.channel_id is not None
+            channel = await plugin.app.rest.fetch_channel(ctx.channel_id)
+        else:
+            channel = await plugin.app.rest.fetch_channel(self.channel.id)
 
-    return await inter.response.send_message(
-        f"This server has {guild_name_count} {noun} in its name",
+        assert (
+            channel.name is not None
+        )  # this command is not dm enabled, so this should never happen
+
+        channel_name_count = sum(not c.isspace() for c in channel.name)
+        noun = "letter" if channel_name_count == 1 else "letters"
+
+        return await ctx.respond(
+            f"{channel.mention} has {channel_name_count} {noun} in its name",
+        )
+
+
+@plugin.include
+@command(
+    name="pin-count",
+    description="See how many pins are in the channel.",
+    dm_enabled=False,
+)
+class PinCount:
+    channel = option(
+        description="The channel to count the pins of",
+        option_type=GuildTextChannel,
+        default=None,
     )
 
-@letter_count.sub_command(name="channel-name")
-async def count_channel_name(inter: GuildCommandInteraction, channel: GuildChannel):
-    """See how many letters are in a channel name.
+    async def callback(self, ctx: Context):
+        if self.channel is None:
+            assert ctx.channel_id is not None
+            channel = ctx.channel_id
+        else:
+            channel = self.channel.id
 
-    Parameters
-    ----------
-    channel: The channel to count the letters of.
-    """
-    channel_name_count = len(re.sub(r"\s+", "", channel.name))
-    noun = "letter" if channel_name_count == 1 else "letters"
+        pin_count = len(await plugin.app.rest.fetch_pins(channel))
 
-    return await inter.response.send_message(
-        f"The channel {channel.mention} has {channel_name_count} {noun} in its name",
-    )
-
-@plugin.slash_command(name="pin-count")
-async def count_channel_pins(
-    inter: GuildCommandInteraction,
-    channel: Thread | TextChannel | None = None
-):
-    """See how many pins are in the current channel, or given channel.
-
-    Parameters
-    ----------
-    channel: The channel to count the pins of. Defaults to the current channel.
-    """
-    pin_count = len(await (channel or inter.channel).pins())
-
-    return await inter.response.send_message(
-        f"There {'are' if pin_count != 1 else 'is'} {pin_count} { 'pin' if pin_count == 1 else 'pins'} in this channel",
-    )
+        return await ctx.respond(
+            f"<#{channel}> has {pin_count} pinned message{'' if pin_count == 1 else 's'}"
+        )
 
 
-setup, teardown = plugin.create_extension_handlers()
+@plugin.load_hook
+def setup():
+    log.info(f"Loaded {__name__}")
+
+
+@plugin.unload_hook
+def teardown():
+    log.info(f"Unloaded {__name__}")
