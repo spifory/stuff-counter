@@ -3,6 +3,7 @@ version: '3'
 services:
   bot:
     restart: unless-stopped
+    pull_policy: build
     environment:
       BOT_TOKEN: $BOT_TOKEN
       DEFAULT_GUILD: $DEFAULT_GUILD
