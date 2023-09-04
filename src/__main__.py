@@ -1,5 +1,5 @@
 from logging import INFO, basicConfig
-from os import environ, getenv
+from os import environ
 
 from crescent import Client
 from dotenv import load_dotenv
@@ -15,9 +15,12 @@ def main():
     )
 
     bot = RESTBot(environ["BOT_TOKEN"])
+
+    DEFAULT_GUILD = environ.get("DEFAULT_GUILD")
+
     client = Client(
         bot,
-        default_guild=getenv("DEFAULT_GUILD") # type: ignore[reportGeneralTypeIssues]
+        default_guild=int(DEFAULT_GUILD) if DEFAULT_GUILD else None
     )
 
     client.plugins.load_folder("src.plugins")
