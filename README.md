@@ -10,7 +10,7 @@ Setting up the bot is really easy, you firstly need to fill in the .env file wit
 BOT_TOKEN=...
 
 # optional
-TEST_GUILD=... # used for posting commands to a guild. Usually for testing
+DEFAULT_GUILD=... # used for posting commands to a guild. Usually for testing
 ```
 
 Then you can run `poetry run task start` to start the bot.
