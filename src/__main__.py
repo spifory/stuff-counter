@@ -25,7 +25,7 @@ def main():
 
     client.plugins.load_folder("src.plugins")
 
-    bot.run()
+    bot.run(port=8594)
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  bot:
+    restart: unless-stopped
+    environment:
+      BOT_TOKEN: $BOT_TOKEN
+      DEFAULT_GUILD: $DEFAULT_GUILD
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:8594:8594"
