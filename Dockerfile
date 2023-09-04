@@ -11,5 +11,4 @@ RUN --mount=type=cache,target=/root/.cache/pypoetry,sharing=locked \
 
 COPY . .
 
-ENTRYPOINT [ "poetry", "run" ]
-CMD [ "task", "start" ]
+CMD [ "poetry", "run", "task", "start" ]
