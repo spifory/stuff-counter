@@ -1,8 +1,11 @@
+from logging import getLogger
+
 from crescent import Context, Plugin, user_command
 from hikari import RESTBot, User
 
 
 plugin = Plugin[RESTBot, None]()
+LOG = getLogger()
 
 @plugin.include
 @user_command(name="Username Letter Count")
@@ -15,3 +18,11 @@ async def user_letter_count(ctx: Context, user: User):
         user_mentions=False
     )
     return
+
+@plugin.load_hook
+def load() -> None:
+    LOG.info("loaded %s", __name__)
+
+@plugin.unload_hook
+def unload() -> None:
+    LOG.warning("unloaded %s", __name__)
