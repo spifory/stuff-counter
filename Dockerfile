@@ -6,8 +6,9 @@ RUN pip install poetry==1.5.1
 
 COPY poetry.lock pyproject.toml ./
 
-RUN --mount=type=cache,target=/root/.cache/pypoetry,sharing=locked \
-    poetry install --no-root --only=main --no-interaction
+RUN poetry config virtualenvs.in-project true
+
+RUN poetry install --no-root --only=main --no-interaction
 
 COPY . .
 
