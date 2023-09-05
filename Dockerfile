@@ -12,4 +12,5 @@ RUN poetry install --no-root --only=main --no-interaction
 
 COPY . .
 
-CMD [ "poetry", "run", "task", "start" ]
+ENTRYPOINT [ "poetry", "run" ]
+CMD [ "task", "start" ]
