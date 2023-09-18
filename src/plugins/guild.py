@@ -2,19 +2,14 @@
 from __future__ import annotations
 
 from logging import getLogger
-from typing import TYPE_CHECKING
 
 from crescent import Context, Group, Plugin, command, option
-from hikari import GuildTextChannel, RESTBot, Role
-
-if TYPE_CHECKING:
-    from hikari import Message
+from hikari import GuildTextChannel, Message, RESTBot, Role
 
 plugin = Plugin[RESTBot, None]()
 log = getLogger(__name__)
 
 letter_count = Group("letter-count", dm_enabled=False)
-
 
 @plugin.include
 @letter_count.child
